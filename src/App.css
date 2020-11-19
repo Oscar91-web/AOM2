@@ -5,3 +5,10 @@
   background-color: white;
 }
 
+/* 
+@media screen and (min-width:840px){
+ 
+  .MobileMenu{
+    display: none;
+  }
+} */

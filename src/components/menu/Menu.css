@@ -1,0 +1,16 @@
+/* 
+    .DisplaySide{
+        display: block;
+    }
+    .MobileView{
+        display: hide !important;
+    }
+
+@media screen and (max-width:840px){
+    .DisplaySide{
+        display: none;
+    }
+    .MobileView{
+        display: block;
+    }
+} */
