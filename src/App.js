@@ -51,5 +51,5 @@ function App() {
 export default App;
 
 /*
-Hämta från pers, men försiktigt med Routern...
+Hämta från pers, men försiktigt med Routern..
 */
