@@ -2,7 +2,7 @@ import React, { } from "react";
 import { DataTable, DataTableBody, DataTableCell, DataTableContent, DataTableHead, DataTableHeadCell, DataTableRow } from "rmwc";
 
 import '@rmwc/icon/styles';
-import '../customers/node_modules/@rmwc/icon/icon.css';
+import '@rmwc/icon/icon.css'
 
 const EmployeeListDataTable = ({ employees, clicked }) => {
 

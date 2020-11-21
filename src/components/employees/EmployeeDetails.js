@@ -1,5 +1,5 @@
 import '@rmwc/icon/styles';
-import '../customers/node_modules/@rmwc/icon/icon.css';
+// import '../customers/node_modules/@rmwc/icon/icon.css';
 import { useState } from 'react';
 import buildURL from '../Utils';
 import axios from 'axios';
