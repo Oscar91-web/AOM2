@@ -1,5 +1,5 @@
 import '@rmwc/icon/styles';
-import '@rmwc/icon/icon.css';
+import '../customers/node_modules/@rmwc/icon/icon.css';
 import { useState } from 'react';
 import buildURL from '../Utils';
 import axios from 'axios';
@@ -206,7 +206,7 @@ const EmployeeDetails = ({ employee, setEmployee, employeeGroups }) => {
                         <GridCell span={2}>
                             <TextField outlined label="Employment Group" value={empGroup} onClick={clickedEmpgroupField} readOnly />
                             <MenuSurfaceAnchor>
-                                <Menu open={openEmpGroups} renderToPortal={true}>
+                                <Menu open={openEmpGroups} renderToPortal={true} onClose={() => setOpenEmpGroups(false)}>
                                     {employeeGroups.map(g => (
                                         <MenuItem key={g.value} onClick={() => clickedEmpgroup(g)}>{g.value} - {g.description}</MenuItem>
                                     ))}

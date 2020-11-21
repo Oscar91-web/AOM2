@@ -2,7 +2,7 @@ import { Menu, GridRow, Tab, TabBar, TextField, Typography, GridCell, MenuSurfac
 // import Icon from '@rmwc/icon';
 import axios from 'axios';
 import '@rmwc/icon/styles';
-import '@rmwc/icon/icon.css';
+import '../customers/node_modules/@rmwc/icon/icon.css';
 // import EmployeeList from "./EmployeeList";
 import { useEffect, useState } from "react";
 import EmployeeDetails from "./EmployeeDetails";
@@ -151,7 +151,7 @@ const Employees = () => {
 
     console.log("rendering Employee - group: " + employeeGroups);
     return <div>
-        <Typography use="headline4">Employees</Typography>
+        {/* <Typography use="headline4">Employees</Typography> */}
 
             <GridRow>
                 <GridCell span={6}>
