@@ -9,7 +9,8 @@ import CustomerDetails from './CustomerDetails';
 
 // import EmployeeGroups from "./EmployeeGroups";
 // import EmployeeListDataTable from "./EmployeeListDataTable";
-import buildURL from "../Utils";
+import { buildURL } from "../Utils";
+import CustomerListDataTable from "./CustomerListDataTable";
 
 const Customers = () => {
     const [customers, setCustomers] = useState([]);
@@ -17,6 +18,7 @@ const Customers = () => {
     const [customer, setCustomer] = useState(null);
     const [open, setOpen] = useState(false);
     const [detailedList, setDetailedList] = useState(false);
+    const [ascending, setAscending] = useState(true);
 
     const handleChange = (e) => {
         let value = e.target.value;
@@ -31,7 +33,9 @@ const Customers = () => {
             setCustomers([]);
         }
     }
-
+    const ascDesc = (s) => {
+        return s + ((!ascending) ? "" : "-");
+    }
     const keyDown = (e) => {
         let value = e.target.value;
         console.log("key: " + e.key)
@@ -43,7 +47,7 @@ const Customers = () => {
             setOpen(false);
             setCustomers([]);
             // searchCustomers(API_URL + "/?limit=10&q=" + value);
-            searchCustomers(buildURL("customer", null, {limit: 10, q: value}));
+            searchCustomers(value, "name");
         }
     }
 
@@ -61,8 +65,9 @@ const Customers = () => {
         setOpen(false);
     };
 
-
-    const searchCustomers = async (url) => {
+    const searchCustomers = async (value, col) => {
+        let url = buildURL("customer", null, {limit: 10, q: value, 'order-by': ascDesc(col) })
+        console.log("SEARCHING........................")
         console.log(url);
         try {
             const data = await axios.get(url);
@@ -75,6 +80,10 @@ const Customers = () => {
             console.log(err)
             // setError(err.message);
         }
+    }
+
+    function sortBy(col, ascdesc) {
+        searchCustomers(search, col);
     }
 
 
@@ -109,7 +118,7 @@ const Customers = () => {
         <CustomerDetails customer={customer} />
 
         {/* <EmployeeList customers={customers} setCustomers={setCustomers} employee={employee} setEmployee={setEmployee}></EmployeeList> */}
-        {/* {detailedList && <CustomerListDataTable customers={customers} clicked={clicked} ></CustomerListDataTable>} */}
+        {detailedList && <CustomerListDataTable customers={customers} clicked={clicked} sortBy={sortBy}></CustomerListDataTable>}
     </div>;
 }
 

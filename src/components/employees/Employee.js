@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import EmployeeDetails from "./EmployeeDetails";
 import EmployeeGroups from "./EmployeeGroups";
 import EmployeeListDataTable from "./EmployeeListDataTable";
-import buildURL from "../Utils";
+import { buildURL } from "../Utils";
 
 const Employees = () => {
     const [employees, setEmployees] = useState([]);

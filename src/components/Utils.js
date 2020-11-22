@@ -1,6 +1,6 @@
 const API_URL = "http://pluto.im.se:5280/JSONTRIMService/json";
 
-function buildURL(resource, path, params) {
+export function buildURL(resource, path, params) {
     let ret = API_URL + "/" + resource + ((path) ? "/" + path : "");
     let qp = null;
     if (params) {
