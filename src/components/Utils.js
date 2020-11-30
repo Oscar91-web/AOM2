@@ -12,29 +12,23 @@ export function buildURL(resource, path, params) {
     if (qp) {
         ret = ret + "?" + qp;
     }
-    console.log("built URL: " + ret);
     return ret;
 }
 
 export const get = async (resource, path, params, name, fun) => {
     let url = buildURL(resource, path, params)
-    console.log("*************** get ........................")
-    console.log(url);
     try {
         const data = await axios.get(url);
         if (data != null) {
             let val = data.data[name];
             if (val) {
-                console.log(val);
                 fun(val);
             }
             else {
-                console.log("no data for: " + name);
-                snackbarQueue.notify({ title: `No data for ${name}` });
+                fun(data.data);
             }
         }
         else {
-            console.log("no data")
             snackbarQueue.notify({ title: "No data!" });
         }
     }
@@ -42,7 +36,7 @@ export const get = async (resource, path, params, name, fun) => {
         console.log("error keys:")
         Object.keys(err).forEach(key => {
             console.log("key: " + key, err[key]);
-          });
+        });
         let msg;
         if (err.response) {
             msg = err.response.data;

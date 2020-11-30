@@ -1,31 +1,9 @@
 import '@rmwc/icon/styles';
 import '@rmwc/icon/icon.css';
-import { useState } from 'react';
-import buildURL from '../Utils';
-import axios from 'axios';
+import { GridRow, GridCell, TextField } from 'rmwc';
 
-// const phonePattern = /^\+?[0-9()\- ]+$/;
-// const phonePatternString = "^[+]?[0-9 \(\)\-]+";
+const OrderDetails = ({ customer }) => {
 
-import { GridRow, GridCell, TextField, MenuSurfaceAnchor, Menu, MenuItem, Button } from 'rmwc';
-
-const OrderDetails = ({ customer, setCustomer }) => {
-
-    console.log(customer);
-    /*
-    {
-    "customer_number": "50006",
-    "bill": "50006",
-    "language": "XXX",
-    "ref": null,
-    "salesman": "50",
-    "name": "External temp. sell-to cust",
-    "name2": null,
-    "street": "Address",
-    "city": "CITY",
-    "country": "SE"
-    },
-    */
     if (customer) {
         return (<div>
             <GridRow>

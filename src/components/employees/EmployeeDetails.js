@@ -1,11 +1,8 @@
 import '@rmwc/icon/styles';
-// import '../customers/node_modules/@rmwc/icon/icon.css';
 import { useState } from 'react';
 import buildURL from '../Utils';
 import axios from 'axios';
 
-// const phonePattern = /^\+?[0-9()\- ]+$/;
-// const phonePatternString = "^[+]?[0-9 \(\)\-]+";
 const phonePatternString = "^[+]?[0-9 ()-]+$";
 const phonePattern = new RegExp(phonePatternString);
 const emailPatternString = "^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+$";
@@ -21,21 +18,14 @@ const EmployeeDetails = ({ employee, setEmployee, employeeGroups }) => {
     const [empGroup, setEmpGroup] = useState(employee.employee_group);
     const [hasChanged, setHasChanged] = useState(false);
 
-    console.log(employee);
-
     function enteredName(e) {
         let value = e.target.value;
         if (e.key === 'Enter') {
-            console.log("entered name: " + value);
             setName(value);
         }
     }
 
-
     function clickedEmpgroup(g) {
-        console.log("clicked emp group");
-        console.log(g);
-        // employee.employee_group_id = g.value;
         setEmpGroup(g.value);
         setHasChanged(g.value !== employee.employee_group_id);
         employee.employee_group = g.description;
@@ -53,40 +43,30 @@ const EmployeeDetails = ({ employee, setEmployee, employeeGroups }) => {
     }
 
     function handlePhoneChange(e) {
-        console.log("handlephonechg:")
-        console.log(e);
         let value = e.target.value;
-        let isPhoneValid = phonePattern.test(value);
-        console.log("phone valid: " + isPhoneValid)
+        // let isPhoneValid = phonePattern.test(value);
         setPhone(value);
         setHasChanged(value !== employee.phone);
     }
 
     function handleEmailChange(e) {
-        console.log("handleemailchg:")
-        console.log(e);
         let value = e.target.value;
-        let isEmailValid = emailPattern.test(value);
-        console.log("email valid: " + isEmailValid)
+        // let isEmailValid = emailPattern.test(value);
         setEmail(value);
         setHasChanged(value !== employee.email);
     }
 
     function saveButtonEnabled() {
-        console.log("has changed:" + hasChanged);
         let isValid = allFieldsValid();
-        console.log("isValid: " + isValid);
         let returnValue = hasChanged && isValid;
-        console.log("saveButtonEnabled: " + returnValue);
         return returnValue;
     }
+
     function allFieldsValid() {
-        // return emailValid && phoneValid;
         let valid = 
             (phone.length === 0 || phonePattern.test(phone))
             && (email.length === 0 || emailPattern.test(email))
             // && (empGroup !== employee.employee_group_id);
-        console.log("allFieldsValid: " + valid);
         return valid;
     }
 
@@ -119,8 +99,6 @@ const EmployeeDetails = ({ employee, setEmployee, employeeGroups }) => {
     }
 
     if (employee) {
-        console.log("empgroup");
-        console.log(employeeGroups);
         return (<div>
             <GridRow>
                 <GridCell span={8}>

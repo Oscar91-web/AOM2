@@ -1,15 +1,9 @@
-import { Menu, GridRow, Tab, TabBar, TextField, Typography, GridCell, MenuSurfaceAnchor, MenuItem } from "rmwc";
-// import Icon from '@rmwc/icon';
-import axios from 'axios';
+import { Menu, GridRow, TextField, GridCell, MenuSurfaceAnchor, MenuItem } from "rmwc";
 import '@rmwc/icon/styles';
 import '@rmwc/icon/icon.css';
-// import EmployeeList from "./EmployeeList";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CustomerDetails from './CustomerDetails';
-
-// import EmployeeGroups from "./EmployeeGroups";
-// import EmployeeListDataTable from "./EmployeeListDataTable";
-import { buildURL } from "../Utils";
+import { buildURL, get } from "../Utils";
 import CustomerListDataTable from "./CustomerListDataTable";
 
 const Customers = () => {
@@ -18,7 +12,7 @@ const Customers = () => {
     const [customer, setCustomer] = useState(null);
     const [open, setOpen] = useState(false);
     const [detailedList, setDetailedList] = useState(false);
-    const [ascending, setAscending] = useState(true);
+    // const [ascending, setAscending] = useState(true);
 
     const handleChange = (e) => {
         let value = e.target.value;
@@ -33,15 +27,13 @@ const Customers = () => {
             setCustomers([]);
         }
     }
-    const ascDesc = (s) => {
-        return s + ((!ascending) ? "" : "-");
-    }
+    // const ascDesc = (s) => {
+    //     return s + ((!ascending) ? "" : "-");
+    // }
+
     const keyDown = (e) => {
         let value = e.target.value;
-        console.log("key: " + e.key)
-        console.log("trgt vl: " + e.target.value)
         if (e.key === 'Enter') {
-            console.log('Enter pressed');
             setSearch(e.target.value);
             setDetailedList(true);
             setOpen(false);
@@ -58,7 +50,6 @@ const Customers = () => {
     }
 
     const clicked = (e) => {
-        console.log("CLICKJED!!!!")
         setSearch("");
         setCustomers([]);
         setCustomer(e);
@@ -66,20 +57,8 @@ const Customers = () => {
     };
 
     const searchCustomers = async (value, col) => {
-        let url = buildURL("customer", null, {limit: 10, q: value, 'order-by': ascDesc(col) })
-        console.log("SEARCHING........................")
-        console.log(url);
-        try {
-            const data = await axios.get(url);
-            if (data != null) {
-                console.log(data.data.customers);
-                setCustomers(data.data.customers);
-            }
-        }
-        catch (err) {
-            console.log(err)
-            // setError(err.message);
-        }
+        // let url = buildURL("customer", null, {limit: 10, q: value, 'order-by': ascDesc(col) })
+        get("customer", null, {limit: 10, q: value}, "customers", setCustomers);
     }
 
     function sortBy(col, ascdesc) {

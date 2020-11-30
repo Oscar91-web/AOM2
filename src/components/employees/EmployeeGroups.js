@@ -1,10 +1,10 @@
 import { GridRow, GridCell, TextField } from 'rmwc';
 
 const EmployeeGroups = ({ employee, userGroups }) => {
-    return (employee) ? 
-         userGroups.map(ug =>
-            <>
-                <GridRow>
+    return (employee) ?
+        userGroups.map(ug =>
+            <div key={ug}>
+                <GridRow key={ug}>
                     <GridCell span={12}>
                         <GridRow>
                             <GridCell span={2}>
@@ -16,10 +16,10 @@ const EmployeeGroups = ({ employee, userGroups }) => {
                         </GridRow>
                     </GridCell>
                 </GridRow>
-                <p />
-            </>
+                <p/>
+            </div>
         )
-    : <div></div>
+        : <div></div>
 }
 
 export default EmployeeGroups;

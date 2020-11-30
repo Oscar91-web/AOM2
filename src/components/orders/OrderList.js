@@ -4,9 +4,7 @@ import { List, SimpleListItem } from "rmwc";
 import '@rmwc/icon/styles';
 import '@rmwc/icon/icon.css';
 
-// import EmployeeDetails from "./EmployeeDetails";
-
-const OrderList = ({ employees, setEmployees, employee, setEmployee }) => {
+const OrderList = ({ employees, setEmployees, setEmployee }) => {
 
   function clicked(e) {
     setEmployee(e);

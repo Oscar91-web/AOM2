@@ -1,87 +1,52 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Legend, Text, Tooltip, XAxis, YAxis } from "recharts";
 import { diagramWidth } from "../../Settings";
-import buildURL from "../Utils";
-const datax = [
+
+/* TODO: fake */
+
+const data = [
     {
-        "name": "Page A",
-        "uv": 4000,
-        "pv": 2400
+        "name": "19-aug",
+        "uv": 50,
     },
     {
-        "name": "Page B",
-        "uv": 3000,
-        "pv": 1398
+        "name": "20-aug",
+        "uv": 61,
     },
     {
-        "name": "Page C",
-        "uv": 2000,
-        "pv": 9800
+        "name": "21-aug",
+        "uv": 23,
     },
     {
-        "name": "Page D",
-        "uv": 2780,
-        "pv": 3908
+        "name": "22-aug",
+        "uv": 66,
     },
     {
-        "name": "Page E",
-        "uv": 1890,
-        "pv": 4800
+        "name": "23-aug",
+        "uv": 59,
     },
     {
-        "name": "Page F",
-        "uv": 2390,
-        "pv": 3800
+        "name": "24-aug",
+        "uv": 0,
     },
     {
-        "name": "Page G",
-        "uv": 3490,
-        "pv": 4300
-    }
+        "name": "25-aug",
+        "uv": 27,
+    },
+
 ]
-const HoldsExceptionsByShipDate = () => {
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        console.log("EFFECT");
-        getOrderStatus();
-    }, []);
+const HoldsAndExceptionsByShipDate = () => {
 
-    async function getOrderStatus() {
-        let url = buildURL("orderstatus", "LABO");
-        try {
-            const data = await axios.get(url);
-            if (data != null) {
-                console.log("hERERERE")
-                console.log(data.data.status_counts);
-                setData(data.data.status_counts);
-
-                // setUserGroups(data.data.status_counts);
-            }
-            else {
-                console.log("NO USER GROUP GFOUnd")
-            }
-        }
-        catch (err) {
-            console.log(err)
-            // setError(err.message);
-        }
-    }
-    function handleBarClick(e) {
-        console.log("clicked bar!");
-        console.log(e);
-    }
     return <>
-        <Text textAnchor="middle">Holds / Exceptions By Ship Date</Text>
-        <BarChart width={diagramWidth} height={250} data={data} onClick={handleBarClick}>
+        <Text textAnchor="middle">Customer Orders Due For Shipment (TO DO)</Text>
+        <BarChart width={diagramWidth} height={250} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="status" />
+            <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="count" fill="#8884d8" />
+            <Bar dataKey="uv" fill="#c00000" />
         </BarChart>
     </>
 }
 
-export default HoldsExceptionsByShipDate;
+export default HoldsAndExceptionsByShipDate;

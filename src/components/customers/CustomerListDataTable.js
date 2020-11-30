@@ -6,47 +6,45 @@ import '@rmwc/icon/icon.css';
 
 const CustomerListDataTable = ({ customers, clicked, sortBy }) => {
   const [sortDir, setSortDir] = React.useState(null);
-  function sortClick() {
-    console.log("SORTCLIOCKEKKED")
-  }
 
   function sortCustomerNumber(sortDir) {
     setSortDir(sortDir);
   }
-  // const [employee, setEmployee] = useState(null);
-        let customerList = customers.map(e => 
-        <DataTableRow key={e.customer_number} onClick={() => clicked(e)}>
-              <DataTableCell>{e.customer_number}</DataTableCell>
-              <DataTableCell>{e.name}</DataTableCell>
-              <DataTableCell>{e.city}</DataTableCell>
-        </DataTableRow>
-    );
-    if (!customers || customers.length === 0) {
-      return <></>;
-    }
-    return (
-      <div>
+
+  let customerList = customers.map(c =>
+    <DataTableRow key={c.customer_number} onClick={() => clicked(c)}>
+      <DataTableCell>{c.customer_number}</DataTableCell>
+      <DataTableCell>{c.name}</DataTableCell>
+      <DataTableCell>{c.city}</DataTableCell>
+    </DataTableRow>
+  );
+
+  if (!customers || customers.length === 0) {
+    return <></>;
+  }
+  return (
+    <div>
       <DataTable>
         <DataTableContent>
           <DataTableHead>
             <DataTableRow>
               <DataTableHeadCell sort={sortDir}
-              onSortChange={sortDir => {
-                sortCustomerNumber(sortDir);
-                console.log(sortDir);
-              }}>Customer Number</DataTableHeadCell>
+                onSortChange={sortDir => {
+                  sortCustomerNumber(sortDir);
+                  console.log(sortDir);
+                }}>Customer Number</DataTableHeadCell>
               <DataTableHeadCell>Name</DataTableHeadCell>
               <DataTableHeadCell>City</DataTableHeadCell>
             </DataTableRow>
           </DataTableHead>
           <DataTableBody>
-              {customerList}
+            {customerList}
           </DataTableBody>
         </DataTableContent>
       </DataTable>
       {/* <EmployeeDetails employee={employee}></EmployeeDetails> */}
-      </div>
-    );
+    </div>
+  );
 }
 
 export default CustomerListDataTable;
