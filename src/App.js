@@ -1,4 +1,4 @@
-import { Drawer, DrawerAppContent, DrawerContent, DrawerHeader, DrawerSubtitle, DrawerTitle, List, ListItem, Portal, SimpleTopAppBar, SnackbarQueue, TopAppBarFixedAdjust } from "rmwc";
+import { Drawer, DrawerAppContent, DrawerContent, DrawerHeader, DrawerSubtitle, DrawerTitle, List, ListItem, Portal, SimpleTopAppBar, SnackbarQueue, TextField, TopAppBarFixedAdjust } from "rmwc";
 import { Link, Route, Switch } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
@@ -10,6 +10,9 @@ import { useState, useEffect } from 'react';
 import DashBoard from "./components/orderprogress/DashBoard";
 import Orders from "./components/orders/Orders";
 import { snackbarQueue } from "./snackbarQueue";
+import OrderLinesListDataTable from './components/orderlines/OrderLinesListDataTable';
+import HoldsAndExceptions from "./components/holdandexceptions/HoldAndExceptions";
+import { get } from "./components/Utils";
 
 WebFont.load({
   google: {
@@ -21,6 +24,8 @@ function App() {
   const [mobile, setMobile] = useState(false);
   const mediaQuery = "(max-width: 700px)";
   const [title, setTitle] = useState("AOM2");
+  const [user, setUser] = useState("");
+  const [salesMan, setSalesMan] = useState(null);
 
   useEffect(() => {
     const mql = window.matchMedia(mediaQuery);
@@ -32,9 +37,35 @@ function App() {
 
   const [open, setOpen] = useState(true);
 
+  const keyDown = (e) => {
+    let value = e.target.value;
+    if (e.key === 'Enter') {
+      get("pers", value, null, null, (obj) => {
+        if (obj.number) {
+          setSalesMan(obj.number);
+          // setActiveTab(0);
+        }
+        else {
+          setUser("");
+          setSalesMan(null);
+        }
+      });
+    }
+  }
+
+  const clicked = () => {
+    console.log("clicked!");
+    setUser("");
+    setSalesMan(null);
+  }
+
+  let loginContent =
+    <TextField value={user} label="User" onChange={(e) => setUser(e.target.value)} onKeyDown={keyDown} onClick={() => clicked()} placeholder="Login..." invalid={!salesMan} />;
+  let params = { order_number: 100107 }
   return (
     <>
       <SimpleTopAppBar
+        endContent={loginContent}
         title={title}
         navigationIcon
         onNav={() => setOpen(!open)}
@@ -44,7 +75,8 @@ function App() {
             onClick: () => console.log("downloading...")
           },
           { icon: 'print', onClick: () => console.log('Do Something') },
-          { icon: 'bookmark', onClick: () => console.log('Do Something') }
+          { icon: 'bookmark', onClick: () => console.log('Do Something') },
+          { icon: 'search', label: 'mylabel', onClick: () => console.log("kaka") }
         ]}
       />
       <TopAppBarFixedAdjust />
@@ -61,7 +93,8 @@ function App() {
               <Link to="/employees" style={{ color: 'inherit', textDecoration: 'inherit' }} onClick={() => setTitle("Employees")}><ListItem>Employees</ListItem></Link>
               <Link to="/customers" style={{ color: 'inherit', textDecoration: 'inherit' }} onClick={() => setTitle("Customers")}><ListItem>Customers</ListItem></Link>
               <Link to="/orders" style={{ color: 'inherit', textDecoration: 'inherit' }} onClick={() => setTitle("Orders")}><ListItem>Orders</ListItem></Link>
-              <Link to="/orderProgress" style={{ color: 'inherit', textDecoration: 'inherit' }} onClick={() => setTitle("Order Progress Dashboard")}><ListItem>Order Progress Dashboard</ListItem></Link>
+              <Link to="/orderProgress" style={{ color: 'inherit', textDecoration: 'inherit' }} onClick={() => setTitle("Order Progress Dashboard")}><ListItem>Order Progress</ListItem></Link>
+              <Link to="/holdsandexceptions" style={{ color: 'inherit', textDecoration: 'inherit' }} onClick={() => setTitle("Holds and Exceptions Dashboard")}><ListItem>Holds and Exceptions</ListItem></Link>
             </List>
           </DrawerContent>
         </Drawer>
@@ -70,7 +103,10 @@ function App() {
             <Route path='/employees' component={Employees} />
             <Route path='/customers' component={Customers} />
             <Route path='/orders' component={Orders} />
-            <Route path='/orderProgress' component={DashBoard} />
+            <Route path='/orderProgress'>
+              <DashBoard salesMan={salesMan} />
+            </Route>
+            <Route path='/holdsandexceptions' component={HoldsAndExceptions} />
           </Switch>
         </DrawerAppContent>
       </Router>
@@ -82,6 +118,7 @@ function App() {
       // leading
       // stacked
       />
+      <OrderLinesListDataTable params={params} />
     </>
   );
 }

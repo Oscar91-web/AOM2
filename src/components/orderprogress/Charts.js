@@ -5,7 +5,7 @@ import CustomerOrdersDueForShipment from "./CustomerOrdersDueForShipment";
 import HoldsExceptionsByShipDate from "./HoldsExceptionsByShipDate";
 import SalesStatistics from "./SalesStatistics";
 
-const Charts = ({ showOrders, salesMan }) => {
+const Charts = ({ showOrders, showOrderLines, salesMan }) => {
 
     return <>
         <GridRow>
@@ -16,7 +16,7 @@ const Charts = ({ showOrders, salesMan }) => {
                 <CustomerOrdersByStatus showOrders={showOrders} salesMan={salesMan}/>
             </GridCell>
             <GridCell span={4}>
-                <CoLines />
+                <CoLines showOrderLines={showOrderLines}/>
             </GridCell>
         </GridRow>
         <GridRow>

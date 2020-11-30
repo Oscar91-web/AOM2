@@ -11,6 +11,9 @@ const CustomerOrdersByStatus = ({ showOrders, salesMan }) => {
         if (salesMan) {
             get("orderstatus", salesMan, null, "status_counts", setData);
         }
+        else {
+            setData([]);
+        }
 
     }, [salesMan]);
 

@@ -1,14 +1,15 @@
 import { useState } from "react"
-import { GridCell, GridRow, Tab, TabBar, TextField } from "rmwc"
+import { GridCell, GridRow, Tab, TabBar } from "rmwc"
+import OrderLinesListDataTable from "../orderlines/OrderLinesListDataTable"
 import OrderListDataTable from "../orders/OrderListDataTable"
 import { get } from "../Utils"
 import Charts from "./Charts"
 
-const DashBoard = () => {
+const DashBoard = ({salesMan}) => {
     const [activeTab, setActiveTab] = useState(0);
     const [orders, setOrders] = useState([]);
-    const [salesMan, setSalesMan] = useState(null);
-    const [user, setUser] = useState("");
+    const [orderLines, setOrderLines] = useState([]);
+    // const [params, setParams] = useState({});
 
     const searchOrders = async (value) => {
         if (salesMan) {
@@ -21,36 +22,47 @@ const DashBoard = () => {
         searchOrders(status)
     }
 
-    const keyDown = (e) => {
-        let value = e.target.value;
-        if (e.key === 'Enter') {
-            get("pers", value, null, null, (obj) => {
-                if (obj.number) {
-                    setSalesMan(obj.number);
-                    setActiveTab(0);
-                }
-                else {
-                    setUser("");
-                    setSalesMan(null);
-                }
-            });
-        }
+    function showOrderLines(params) {
+        // searchOrders(status)
+        console.log("showing orderlines: " + params)
+        searchOrderLines(params);
     }
 
-    function onClick() {
-        setUser("");
+    function searchOrderLines(params) {
+        get("orderline", null, params, "orderlines", setOrderLines);
+        setActiveTab(2);
     }
+
+    // const keyDown = (e) => {
+    //     let value = e.target.value;
+    //     if (e.key === 'Enter') {
+    //         get("pers", value, null, null, (obj) => {
+    //             if (obj.number) {
+    //                 setSalesMan(obj.number);
+    //                 setActiveTab(0);
+    //             }
+    //             else {
+    //                 setUser("");
+    //                 setSalesMan(null);
+    //             }
+    //         });
+    //     }
+    // }
+
+    // function onClick() {
+    //     setUser("");
+    // }
 
     let content;
     switch (activeTab) {
         case 0:
-            content = <Charts showOrders={showOrders} salesMan={salesMan} />;
+            content = <Charts showOrders={showOrders} salesMan={salesMan} showOrderLines={showOrderLines}/>;
             break;
         case 1:
             content = <OrderListDataTable orders={orders} clicked={null} />
             break;
-        case -1:
-            // content = <div></div>;
+        case 2:
+            content = <OrderLinesListDataTable orderLines={orderLines} />
             break;
         default:
             content = <h3>No such tab: {activeTab}</h3>;
@@ -62,11 +74,12 @@ const DashBoard = () => {
                 <TabBar activeTabIndex={activeTab} onActivate={evt => setActiveTab(evt.detail.index)}>
                     <Tab minWidth>Dashboard</Tab>
                     <Tab minWidth>Orders</Tab>
+                    <Tab minWidth>Order lines</Tab>
                 </TabBar>
             </GridCell>
-            <GridCell>
+            {/* <GridCell>
                 <TextField autoFocus outlined icon="search" value={user} label="User" onKeyDown={keyDown} onClick={onClick} onChange={(e) => setUser(e.target.value)} />
-            </GridCell>
+            </GridCell> */}
         </GridRow>
         {content}
     </>
