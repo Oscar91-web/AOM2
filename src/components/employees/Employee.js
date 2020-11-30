@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import EmployeeDetails from "./EmployeeDetails";
 import EmployeeGroups from "./EmployeeGroups";
 import EmployeeListDataTable from "./EmployeeListDataTable";
-import { buildURL } from "../Utils";
+import { buildURL, get } from "../Utils";
 
 const Employees = () => {
     const [employees, setEmployees] = useState([]);
@@ -27,7 +27,7 @@ const Employees = () => {
             setOpen(true);
         }
         if (value.length > 2) {
-            searchEmps(buildURL("employees", null, {limit: 5, q: value}));
+            searchEmployees({limit: 5, q: value});
         }
         else {
             setEmployees([]);
@@ -45,8 +45,7 @@ const Employees = () => {
             setOpen(false);
             setEmployees([]);
             setActiveTab(0);
-            // searchEmps(API_URL + "/?limit=10&q=" + value);
-            searchEmps(buildURL("employees", null, {limit: 10, q: value}));
+            searchEmployees({limit: 10, q:value});
         }
     }
 
@@ -71,57 +70,18 @@ const Employees = () => {
         setActiveTab(idx);
     }
 
-    const searchEmps = async (url) => {
-        console.log(url);
-        try {
-            const data = await axios.get(url);
-            if (data != null) {
-                console.log(data.data.employees);
-                setEmployees(data.data.employees);
-            }
-        }
-        catch (err) {
-            console.log(err)
-            // setError(err.message);
-        }
+    const searchEmployees = async (params) => {
+        get("employees", null, params, "employees", setEmployees);
     }
 
     const searchUserGroups = async (employee) => {
-        const url = buildURL("usergroups", employee.user);
-        
-        console.log("rurl: " + url);
-        try {
-            const data = await axios.get(url);
-            if (data != null) {
-                console.log("hERERERE")
-                console.log(data.data.usergroups);
-                setUserGroups(data.data.usergroups);
-            }
-            else {
-                console.log("NO USER GROUP GFOUnd")
-            }
-        }
-        catch (err) {
-            console.log(err)
-            // setError(err.message);
-        }
-    }
+        get("usergroups", employee.user, null, "usergroups", setUserGroups);
+    };
+
     const searchEmpGroups = async () => {
-        let url = buildURL("codelookup", "EMPGROUP");
-        console.log(url);
-        try {
-            const data = await axios.get(url);
-            if (data != null) {
-                console.log("codes:");
-                console.log(data.data.codes);
-                setEmployeeGroups(data.data.codes);
-            }
-        }
-        catch (err) {
-            console.log(err)
-            // setError(err.message);
-        }
-    }
+        get("codelookup", "EMPGROUP", "codes", setEmployeeGroups);
+    };
+    
     let content;
     console.log("content for activeTab: " + activeTab);
     switch (activeTab) {
@@ -155,10 +115,7 @@ const Employees = () => {
 
             <GridRow>
                 <GridCell span={6}>
-                <TabBar
-            activeTabIndex={activeTab}
-            onActivate={evt => setTab(evt.detail.index)}
-        >
+                <TabBar activeTabIndex={activeTab} onActivate={evt => setTab(evt.detail.index)}>
                     <Tab minWidth>Employee</Tab>
                     <Tab minWidth>User Groups</Tab>
                     </TabBar>
