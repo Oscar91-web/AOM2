@@ -1,5 +1,6 @@
 import { Bar, BarChart, CartesianGrid, Legend, Text, Tooltip, XAxis, YAxis } from "recharts";
 import { diagramWidth } from "../../Settings";
+import { notify } from "../../snackbarQueue";
 
 /* TODO: fake */
 
@@ -38,7 +39,7 @@ const CustomerOrdersDueForShipment = () => {
 
     return <>
         <Text textAnchor="middle">Customer Orders Due For Shipment (TO DO)</Text>
-        <BarChart width={diagramWidth} height={250} data={data}>
+        <BarChart width={diagramWidth} height={250} data={data} onClick={() => notify("Not implemented yet!")}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
