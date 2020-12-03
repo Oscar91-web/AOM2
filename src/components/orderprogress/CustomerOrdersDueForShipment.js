@@ -1,5 +1,4 @@
 import { Bar, BarChart, CartesianGrid, Legend, Text, Tooltip, XAxis, YAxis } from "recharts";
-import { diagramWidth } from "../../Settings";
 import { notify } from "../../snackbarQueue";
 
 /* TODO: fake */
@@ -35,7 +34,7 @@ const data = [
     },
 
 ]
-const CustomerOrdersDueForShipment = () => {
+const CustomerOrdersDueForShipment = ({diagramWidth}) => {
 
     return <>
         <Text textAnchor="middle">Customer Orders Due For Shipment (TO DO)</Text>

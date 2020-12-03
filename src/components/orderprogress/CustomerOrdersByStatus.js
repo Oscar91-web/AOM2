@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Legend, Text, Tooltip, XAxis, YAxis } from "recharts";
 import { get } from "../Utils";
-import { diagramWidth } from "../../Settings";
 
-const CustomerOrdersByStatus = ({ showOrders, salesMan }) => {
+const CustomerOrdersByStatus = ({ showOrders, salesMan, diagramWidth }) => {
     const [data, setData] = useState([]);
 
     useEffect(() => {

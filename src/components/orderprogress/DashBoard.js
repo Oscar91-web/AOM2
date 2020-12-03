@@ -5,7 +5,7 @@ import OrderListDataTable from "../orders/OrderListDataTable"
 import { get } from "../Utils"
 import Charts from "./Charts"
 
-const DashBoard = ({salesMan}) => {
+const DashBoard = ({salesMan, diagramWidth}) => {
     const [activeTab, setActiveTab] = useState(0);
     const [orders, setOrders] = useState([]);
     const [orderLines, setOrderLines] = useState([]);
@@ -56,7 +56,7 @@ const DashBoard = ({salesMan}) => {
     let content;
     switch (activeTab) {
         case 0:
-            content = <Charts showOrders={showOrders} salesMan={salesMan} showOrderLines={showOrderLines}/>;
+            content = <Charts showOrders={showOrders} salesMan={salesMan} showOrderLines={showOrderLines} diagramWidth={diagramWidth}/>;
             break;
         case 1:
             content = <OrderListDataTable orders={orders} clicked={null} />

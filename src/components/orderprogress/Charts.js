@@ -5,26 +5,26 @@ import CustomerOrdersDueForShipment from "./CustomerOrdersDueForShipment";
 import HoldsExceptionsByShipDate from "./HoldsExceptionsByShipDate";
 import SalesStatistics from "./SalesStatistics";
 
-const Charts = ({ showOrders, showOrderLines, salesMan }) => {
+const Charts = ({ showOrders, showOrderLines, salesMan, diagramWidth }) => {
 
     return <>
         <GridRow>
-            <GridCell span={4}>
-                <CustomerOrdersDueForShipment />
+            <GridCell >
+                <CustomerOrdersDueForShipment diagramWidth={diagramWidth}/>
             </GridCell>
-            <GridCell span={4}>
-                <CustomerOrdersByStatus showOrders={showOrders} salesMan={salesMan}/>
+            <GridCell >
+                <CustomerOrdersByStatus showOrders={showOrders} salesMan={salesMan} diagramWidth={diagramWidth}/>
             </GridCell>
-            <GridCell span={4}>
-                <CoLines showOrderLines={showOrderLines}/>
+            <GridCell >
+                <CoLines showOrderLines={showOrderLines} diagramWidth={diagramWidth}/>
             </GridCell>
         </GridRow>
         <GridRow>
-            <GridCell span={4}>
-                <HoldsExceptionsByShipDate />
+            <GridCell >
+                <HoldsExceptionsByShipDate diagramWidth={diagramWidth}/>
             </GridCell>
-            <GridCell span={4}>
-                <SalesStatistics />
+            <GridCell >
+                <SalesStatistics diagramWidth={diagramWidth}/>
             </GridCell>
         </GridRow>
     </>;
