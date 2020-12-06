@@ -16,12 +16,12 @@ export function buildURL(resource, path, params) {
 }
 
 export const get = async (resource, path, params, name, fun) => {
-    let url = buildURL(resource, path, params)
+    let url = buildURL(resource, path, params);
     try {
         const data = await axios.get(url);
         if (data != null) {
             let val = data.data[name];
-            if (val) {
+            if (val !== undefined) {
                 fun(val);
             }
             else {

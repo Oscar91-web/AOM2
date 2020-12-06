@@ -120,7 +120,9 @@ function App() {
             <Route path='/orderProgress'>
               <DashBoard salesMan={salesMan} diagramWidth={diagramWidth} />
             </Route>
-            <Route path='/holdsandexceptions' component={HoldsAndExceptions} />
+            <Route path='/holdsandexceptions'>
+              <HoldsAndExceptions salesMan={salesMan}/>
+            </Route> 
           </Switch>
         </DrawerAppContent>
       </Router>

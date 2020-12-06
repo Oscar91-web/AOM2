@@ -16,12 +16,12 @@ const Charts = ({ showOrders, showOrderLines, salesMan, diagramWidth }) => {
                 <CustomerOrdersByStatus showOrders={showOrders} salesMan={salesMan} diagramWidth={diagramWidth}/>
             </GridCell>
             <GridCell >
-                <CoLines showOrderLines={showOrderLines} diagramWidth={diagramWidth}/>
+                <CoLines showOrderLines={showOrderLines} diagramWidth={diagramWidth} salesMan={salesMan}/>
             </GridCell>
         </GridRow>
         <GridRow>
             <GridCell >
-                <HoldsExceptionsByShipDate diagramWidth={diagramWidth}/>
+                <HoldsExceptionsByShipDate showOrderLines={showOrderLines} diagramWidth={diagramWidth}/>
             </GridCell>
             <GridCell >
                 <SalesStatistics diagramWidth={diagramWidth}/>

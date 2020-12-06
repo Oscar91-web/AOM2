@@ -1,4 +1,4 @@
-import { CartesianGrid, Legend, Line, LineChart, Text, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Text, Tooltip, XAxis, YAxis } from "recharts";
 import { notify } from "../../snackbarQueue";
 
 const data = [
@@ -45,20 +45,22 @@ const data = [
     "amt": 2100
   }
 ]
-const SalesStatistics = ({diagramWidth}) => {
+const SalesStatistics = ({ diagramWidth }) => {
 
   return <>
     <Text textAnchor="middle">Sales Statistics</Text>
-    <LineChart width={diagramWidth} height={250} data={data} onClick={() => notify("Not implemented yet!")}
-      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-      <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-    </LineChart>
+    <ResponsiveContainer width="140%" height="90%">
+      <LineChart width={diagramWidth} height={250} data={data} onClick={() => notify("Not implemented yet!")}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="pv" stroke="#8884d8" />
+        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+      </LineChart>
+    </ResponsiveContainer>
   </>
 }
 

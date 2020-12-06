@@ -1,4 +1,4 @@
-import { Bar, BarChart, CartesianGrid, Legend, Text, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Text, Tooltip, XAxis, YAxis } from "recharts";
 import { notify } from "../../snackbarQueue";
 
 /* TODO: fake */
@@ -34,18 +34,20 @@ const data = [
     },
 
 ]
-const HoldsAndExceptionsByShipDate = ({diagramWidth}) => {
+const HoldsAndExceptionsByShipDate = ({ diagramWidth }) => {
 
     return <>
         <Text textAnchor="middle">Customer Orders Due For Shipment (TO DO)</Text>
-        <BarChart width={diagramWidth} height={250} data={data} onClick={() => notify("Not implemented yet!")}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="uv" fill="#c00000" />
-        </BarChart>
+        <ResponsiveContainer width="100%" height="90%">
+            <BarChart width={diagramWidth} height={250} data={data} onClick={() => notify("Not implemented yet!")}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="uv" fill="#c00000" />
+            </BarChart>
+        </ResponsiveContainer>
     </>
 }
 
