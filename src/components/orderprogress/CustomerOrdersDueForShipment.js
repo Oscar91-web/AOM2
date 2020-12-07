@@ -38,7 +38,7 @@ const CustomerOrdersDueForShipment = ({ diagramWidth }) => {
 
     return <>
         <Text textAnchor="middle">Customer Orders Due For Shipment (TO DO)</Text>
-        <ResponsiveContainer width="100%" height="90%">
+        <ResponsiveContainer width="100%" height="93%">
             <BarChart width={diagramWidth} height={250} data={data} onClick={() => notify("Not implemented yet!")}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />

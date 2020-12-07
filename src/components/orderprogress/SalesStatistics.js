@@ -49,7 +49,7 @@ const SalesStatistics = ({ diagramWidth }) => {
 
   return <>
     <Text textAnchor="middle">Sales Statistics</Text>
-    <ResponsiveContainer width="140%" height="90%">
+    <ResponsiveContainer width="100%" height="93%">
       <LineChart width={diagramWidth} height={250} data={data} onClick={() => notify("Not implemented yet!")}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />

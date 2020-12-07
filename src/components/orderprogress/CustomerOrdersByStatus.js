@@ -23,7 +23,7 @@ const CustomerOrdersByStatus = ({ showOrders, salesMan, diagramWidth }) => {
 
     return <>
         <Text textAnchor="middle">Customer Orders By Status</Text>
-        <ResponsiveContainer width="100%" height="90%">
+        <ResponsiveContainer width="100%" height="93%">
             <BarChart width={diagramWidth} height={250} data={data} onClick={handleBarClick}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="status" />

@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import { GridCell, GridRow, TextField } from "rmwc";
-import { get } from "../Utils";
+import { GridCell, GridRow, Tab, TabBar, TextField } from "rmwc";
+import { get, mapColor } from "../Utils";
 import BoxItem from "./BoxItem";
+import HoldListDataTable from "./HoldListDataTable";
 
-const HoldsAndExceptions = ({ salesMan, showOrderLines }) => {
+const HoldsAndExceptions = ({ salesMan }) => {
 
     const [holdList, setHoldList] = useState([]);
+    const [holdsList, setHoldsList] = useState([]);
     const [aggregatedHolds, setAggregatedHolds] = useState([]);
     const [customer, setCustomer] = useState("");
-
-    let colorOk = "rgb(108, 240, 104)";
-    let colorWarning = "rgb(240, 231, 104)";
-    let colorAlert = "rgb(255, 103, 103)";
-    let colorGray = "rgb(176, 176, 176)";
+    const [activeTab, setActiveTab] = useState(0);
 
     useEffect(() => {
         get("holdlist", null, {}, "holdList", setHoldList);
@@ -24,43 +22,73 @@ const HoldsAndExceptions = ({ salesMan, showOrderLines }) => {
     let holds = {};
     aggregatedHolds.forEach(h => holds[h.value] = h.count);
 
-    function mapColor(h) {
-        let count = holds[h.hold_value];
-        let color = colorGray;
-        if (count !== undefined) {
-            if (count >= h.high) {
-                color = colorAlert;
-            }
-            else if (count >= h.medium) {
-                color = colorWarning;
-            }
-            else if (count >= h.low) {
-                color = colorOk;
-            }
-            else {
-                color = colorOk;
-            }
+    function showHoldLines(search) {    
+        console.log("searching for:");
+        console.log(search);
+        if (customer) {
+            console.log("adding customer: " + customer);
+            search.customer = customer;
         }
-        else {
-            count = colorGray;
-        }
-        return color;
+        get("holds", null, search, "holdsList", setHoldsList);
+        setActiveTab(1);
+    }
+    function getColor(h) {
+        // let count = holds[h.hold_value];
+        return mapColor(holds[h.hold_value], h);
     }
 
     holdBoxes = holdList.map(h =>
-        <GridCell key={i++}>
-            <BoxItem label={h.hold_value} value={holds[h.hold_value] ? holds[h.hold_value] : "-"} bgColor={mapColor(h)} salesMan={salesMan} showOrderLines={showOrderLines} />
-        </GridCell>
+        holds[h.hold_value] ?
+            <GridCell key={i++}>
+                <BoxItem label={h.hold_value} value={holds[h.hold_value] ? holds[h.hold_value] : "-"} bgColor={getColor(h)} salesMan={salesMan} showHoldLines={showHoldLines} />
+            </GridCell>
+            : <></>
     );
 
+    let content;
+    switch (activeTab) {
+        case 0:
+            content = <>
+                <p />
+                <GridRow>
+                    <GridCell>
+                        <TextField outlined label="Customer" value={customer} onChange={(e) => setCustomer(e.target.value)} onClick={() => setCustomer("")} />
+                    </GridCell>
+                </GridRow>
+                <p />
+                <GridRow>{holdBoxes}</GridRow>
+            </>
+            break;
+        case 1:
+            content = <HoldListDataTable holdLines={holdsList}/>
+            break;
+        case 2:
+            content = <h3>2</h3>
+            break;
+        default:
+            content = <h3>No such tab: {activeTab}</h3>;
+            break;
+    }
     return <>
         <GridRow>
+            <GridCell span={6}>
+                <TabBar activeTabIndex={activeTab} onActivate={evt => setActiveTab(evt.detail.index)}>
+                    <Tab minWidth>Holds</Tab>
+                    <Tab minWidth>Details</Tab>
+                </TabBar>
+            </GridCell>
+            {/* <GridCell>
+                <TextField autoFocus outlined icon="search" value={user} label="User" onKeyDown={keyDown} onClick={onClick} onChange={(e) => setUser(e.target.value)} />
+            </GridCell> */}
+        </GridRow>
+        {content}
+        {/* <GridRow>
             <GridCell>
                 <TextField outlined label="Customer" value={customer} onChange={(e) => setCustomer(e.target.value)} />
             </GridCell>
         </GridRow>
         <p />
-        <GridRow>{holdBoxes}</GridRow>
+        <GridRow>{holdBoxes}</GridRow> */}
         {/* <GridRow>
             <GridCell><BoxItem label={"091 - EDI Price Error"} value={215} bgColor={colorAlert}/></GridCell>
             <GridCell><BoxItem label={"502 - < 150 LB Not Fedex"} value={0} bgColor={colorOk}/></GridCell>

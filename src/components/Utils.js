@@ -3,6 +3,11 @@ import { snackbarQueue } from '../snackbarQueue';
 
 const API_URL = "http://pluto.im.se:5280/JSONTRIMService/json";
 
+const colorOk = "rgb(108, 240, 104)";
+const colorWarning = "rgb(240, 231, 104)";
+const colorAlert = "rgb(255, 103, 103)";
+const colorGray = "rgb(176, 176, 176)";
+
 export function buildURL(resource, path, params) {
     let ret = API_URL + "/" + resource + ((path) ? "/" + path : "");
     let qp = null;
@@ -52,5 +57,27 @@ export const get = async (resource, path, params, name, fun) => {
     }
 }
 
+export function mapColor(count, colors) {
+    let color;
+    if (count !== undefined) {
+        if (count >= colors.high) {
+            color = colorAlert;
+        }
+        else if (count >= colors.medium) {
+            color = colorWarning;
+        }
+        else if (count >= colors.low) {
+            color = colorOk;
+        }
+        else {
+            color = colorOk;
+        }
+        // color = colorWarning;
+    }
+    else {
+        color = colorGray;
+    }
+    return color;
+}
 
 export default buildURL;
